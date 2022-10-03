@@ -1,0 +1,56 @@
+import java.io.*;
+
+public class Ficheros {
+
+	public static void main(String[]args)
+	{
+		File archivo = new File("\\archivo.txt");
+		FileReader fr = null;
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+	
+		try 
+		{
+			fr = new FileReader(archivo);
+			br = new BufferedReader(fr);
+			
+	                /*Se crea un array para saber mediante el método .length
+                        la dimensión de la cadena en el archivo TXT */
+			char[] numArray = br.readLine().toCharArray(); 
+
+			if(numArray.length <= 20) {
+				String strNumArray = new String(numArray);
+				String msg = null;
+				boolean tieneLetras = strNumArray.matches(".*[a-zA-Z].*");
+				boolean tieneNumeros = strNumArray.matches(".*[0-9].*");
+				boolean tieneSimbolos = strNumArray.matches(".*[^0-9a-zA-Z].*");
+				
+				if(tieneLetras == true){
+					bw = new BufferedWriter(new FileWriter("\\archivo.txt", true));
+                                        //True. Para reescribir el archivo, de otra manera lo remplaza.
+					msg = "La cadena tiene letras, ";
+					bw.write(msg);
+					bw.close();
+				}
+				
+				if(tieneNumeros == true){
+					bw = new BufferedWriter(new FileWriter("\\archivo.txt", true));
+					msg = "tiene números";
+					bw.write(msg);
+					bw.close();
+				}
+				
+				if(tieneSimbolos == true){
+					bw = new BufferedWriter(new FileWriter("\\archivo.txt", true));
+					msg += " y simbolos\n";
+					bw.write(msg);
+					bw.close();
+				}	 
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+}
